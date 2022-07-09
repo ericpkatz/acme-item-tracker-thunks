@@ -1,7 +1,7 @@
 import React from 'react';
 import ThingForm from './ThingForm';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import { deleteThing, updateThing } from './store';
 
 const Things = ({ things, users, deleteThing, increment, updateThing })=> {
   return (
@@ -51,20 +51,16 @@ export default connect(
   },
   (dispatch)=> {
     return {
-      updateThing: async(thing, userId)=> {
+      updateThing: (thing, userId)=> {
         thing = {...thing, userId: userId * 1 };
-        thing = (await axios.put(`/api/things/${thing.id}`, thing)).data;
-        console.log(thing);
-        dispatch({ type: 'UPDATE_THING', thing });
+        dispatch(updateThing(thing));
       },
-      increment: async(thing, dir)=> {
+      increment: (thing, dir)=> {
         thing = {...thing, ranking: thing.ranking + dir};
-        thing = (await axios.put(`/api/things/${thing.id}`, thing)).data;
-        dispatch({ type: 'UPDATE_THING', thing });
+        dispatch(updateThing(thing));
       },
-      deleteThing: async(thing)=> {
-        await axios.delete(`/api/things/${thing.id}`);
-        dispatch({ type: 'DELETE_THING', thing });
+      deleteThing: (thing)=> {
+        dispatch(deleteThing(thing));
       }
     };
 

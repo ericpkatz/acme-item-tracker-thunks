@@ -1,4 +1,7 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+import axios from 'axios';
 
 const initialState = {
   view: window.location.hash.slice(1),
@@ -48,7 +51,22 @@ const reducer = combineReducers({
   view: viewReducer
 });
 
-const store = createStore(reducer);
+const updateThing = (thing)=> {
+  return async(dispatch)=> {
+    thing = (await axios.put(`/api/things/${thing.id}`, thing)).data;
+    dispatch({ type: 'UPDATE_THING', thing });
+  };
+};
+const deleteThing = (thing)=> {
+  return async(dispatch)=> {
+    await axios.delete(`/api/things/${thing.id}`);
+    dispatch({ type: 'DELETE_THING', thing });
+  };
+};
+
+const store = createStore(reducer, applyMiddleware(logger, thunk));
+
+export { deleteThing, updateThing };
 
 export default store;
 
