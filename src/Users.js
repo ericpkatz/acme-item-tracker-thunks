@@ -50,6 +50,8 @@ const mapDispatch = (dispatch)=> {
     createUser: async()=> {
       const user = (await axios.post('/api/users', {name: Math.random()})).data;
       dispatch({ type: 'CREATE_USER', user});
+      //hint
+      //dispatch(createUser({name: Math.random()}));
     },
     removeThingFromUser: async(thing)=> {
       thing = {...thing, userId: null}
