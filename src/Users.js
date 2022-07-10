@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { deleteUser } from './store';
 import axios from 'axios';
 
 
@@ -59,8 +60,7 @@ const mapDispatch = (dispatch)=> {
       dispatch({ type: 'UPDATE_THING', thing: updatedThing});
     },
     deleteUser: async(user)=> {
-      await axios.delete(`/api/users/${user.id}`);
-      dispatch({ type: 'DELETE_USER', user});
+      dispatch(deleteUser(user));
     },
   };
 }
