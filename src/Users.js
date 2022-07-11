@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { deleteUser, createUser, updateThing } from './store';
-import axios from 'axios';
-
 
 const Users = ({ users, createUser, deleteUser, things, removeThingFromUser })=> {
   return (
