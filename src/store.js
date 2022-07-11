@@ -90,10 +90,10 @@ const deleteThing = (thing)=> {
   };
 };
 
-const createUser = (user)=> {
+const createUser = ()=> {
   return async(dispatch)=> {
-    const userCreated = (await axios.post('/api/users', user)).data;
-    dispatch({ type: 'CREATE_USER', userCreated });
+    const user = (await axios.post('/api/users', { name: Math.random()})).data;
+    dispatch({ type: 'CREATE_USER', user });
   };
 };
 

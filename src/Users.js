@@ -47,7 +47,7 @@ const mapStateToProps = (state)=> {
 const mapDispatch = (dispatch)=> {
   return {
     createUser: async()=> {
-      dispatch(createUser({ name: Math.random() }));
+      dispatch(createUser());
     },
     removeThingFromUser: async(thing)=> {
       thing = {...thing, userId: null}
