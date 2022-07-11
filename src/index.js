@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 //import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
-import axios from 'axios';
 import Nav from './Nav';
 import Users from './Users';
 import Things from './Things';
