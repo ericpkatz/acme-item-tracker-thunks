@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteUser } from './store';
+import { deleteUser, createUser } from './store';
 import axios from 'axios';
 
 
@@ -49,10 +49,7 @@ const mapStateToProps = (state)=> {
 const mapDispatch = (dispatch)=> {
   return {
     createUser: async()=> {
-      const user = (await axios.post('/api/users', {name: Math.random()})).data;
-      dispatch({ type: 'CREATE_USER', user});
-      //hint
-      //dispatch(createUser({name: Math.random()}));
+      dispatch(createUser({ name: Math.random() }));
     },
     removeThingFromUser: async(thing)=> {
       thing = {...thing, userId: null}

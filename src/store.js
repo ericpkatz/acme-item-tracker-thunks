@@ -64,6 +64,13 @@ const deleteThing = (thing)=> {
   };
 };
 
+const createUser = (user)=> {
+  return async(dispatch)=> {
+    const userCreated = (await axios.post('/api/users', user)).data;
+    dispatch({ type: 'CREATE_USER', userCreated });
+  };
+};
+
 const deleteUser = (user)=> {
   return async(dispatch)=> {
     await axios.delete(`/api/users/${user.id}`);
@@ -73,7 +80,7 @@ const deleteUser = (user)=> {
 
 const store = createStore(reducer, applyMiddleware(logger, thunk));
 
-export { deleteThing, updateThing, deleteUser };
+export { deleteThing, updateThing, deleteUser, createUser };
 
 export default store;
 
