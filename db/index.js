@@ -6,6 +6,10 @@ const { STRING, INTEGER } = Sequelize;
 const User = conn.define('user', {
   name: {
     type: STRING 
+  },
+  ranking: {
+    type: INTEGER,
+    defaultValue: 5,
   }
 });
 
