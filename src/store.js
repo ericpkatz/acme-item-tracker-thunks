@@ -51,6 +51,13 @@ const reducer = combineReducers({
   view: viewReducer
 });
 
+const createThing = ()=> {
+  return async(dispatch)=> {
+    const thing = (await axios.post('/api/things', { name: Math.random()})).data;
+    dispatch({ type: 'CREATE_THING', thing });
+  };
+};
+
 const updateThing = (thing)=> {
   return async(dispatch)=> {
     thing = (await axios.put(`/api/things/${thing.id}`, thing)).data;
@@ -80,7 +87,7 @@ const deleteUser = (user)=> {
 
 const store = createStore(reducer, applyMiddleware(logger, thunk));
 
-export { deleteThing, updateThing, deleteUser, createUser };
+export { createThing, deleteThing, updateThing, deleteUser, createUser };
 
 export default store;
 
