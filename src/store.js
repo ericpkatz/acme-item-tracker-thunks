@@ -45,6 +45,25 @@ const thingsReducer = (state = [], action)=> {
   return state;
 };
 
+const setView = (dispatch, view)=> {
+  dispatch({ type: 'SET_VIEW', view });
+};
+
+const loadData = async(dispatch)=> {
+  const responses = await Promise.all([
+    axios.get('/api/users'),
+    axios.get('/api/things'),
+  ]);
+  dispatch({
+    type: 'SET_USERS',
+    users: responses[0].data
+  });
+  dispatch({
+    type: 'SET_THINGS',
+    things: responses[1].data
+  });
+}
+
 const reducer = combineReducers({
   users: usersReducer,
   things: thingsReducer,
@@ -87,7 +106,7 @@ const deleteUser = (user)=> {
 
 const store = createStore(reducer, applyMiddleware(logger, thunk));
 
-export { createThing, deleteThing, updateThing, deleteUser, createUser };
+export { setView, loadData, createThing, deleteThing, updateThing, deleteUser, createUser };
 
 export default store;
 

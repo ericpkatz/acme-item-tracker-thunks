@@ -6,7 +6,7 @@ import Nav from './Nav';
 import Users from './Users';
 import Things from './Things';
 import Home from './Home';
-import store from './store';
+import store, { loadData, setView } from './store';
 import { Provider, connect } from 'react-redux';
 
 const root = createRoot(document.querySelector('#app'));
@@ -48,23 +48,8 @@ class _App extends Component{
 
 const mapDispatch = (dispatch)=> {
   return {
-    setView: (view)=> {
-      dispatch({ type: 'SET_VIEW', view });
-    },
-    loadData: async()=> {
-      const responses = await Promise.all([
-        axios.get('/api/users'),
-        axios.get('/api/things'),
-      ]);
-      dispatch({
-        type: 'SET_USERS',
-        users: responses[0].data
-      });
-      dispatch({
-        type: 'SET_THINGS',
-        things: responses[1].data
-      });
-    }
+    setView: (view) => setView(dispatch, view),
+    loadData: () => loadData(dispatch)
   };
 };
 const mapStateToProps = state => {
