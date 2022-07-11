@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteUser, createUser } from './store';
+import { deleteUser, createUser, updateThing } from './store';
 import axios from 'axios';
 
 
@@ -53,8 +53,7 @@ const mapDispatch = (dispatch)=> {
     },
     removeThingFromUser: async(thing)=> {
       thing = {...thing, userId: null}
-      const updatedThing = (await axios.put(`/api/things/${thing.id}`, thing)).data
-      dispatch({ type: 'UPDATE_THING', thing: updatedThing});
+      dispatch(updateThing(thing));
     },
     deleteUser: async(user)=> {
       dispatch(deleteUser(user));
