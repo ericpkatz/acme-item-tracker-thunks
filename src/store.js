@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import axios from 'axios';
+import { faker } from '@faker-js/faker';
 
 const initialState = {
   view: window.location.hash.slice(1),
@@ -75,7 +76,7 @@ const reducer = combineReducers({
 
 const createThing = ()=> {
   return async(dispatch)=> {
-    const thing = (await axios.post('/api/things', { name: Math.random()})).data;
+    const thing = (await axios.post('/api/things', { name: faker.commerce.product() })).data;
     dispatch({ type: 'CREATE_THING', thing });
   };
 };
@@ -95,7 +96,8 @@ const deleteThing = (thing)=> {
 
 const createUser = ()=> {
   return async(dispatch)=> {
-    const user = (await axios.post('/api/users', { name: Math.random()})).data;
+    console.log('faker here', faker);
+    const user = (await axios.post('/api/users', { name: faker.name.firstName() })).data;
     dispatch({ type: 'CREATE_USER', user });
   };
 };
