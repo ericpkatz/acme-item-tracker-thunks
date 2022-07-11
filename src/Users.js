@@ -9,7 +9,8 @@ const Users = ({ users, createUser, deleteUser, things, removeThingFromUser, inc
       <button onClick={ createUser }>+</button>
       <ul>
         {
-          users.map( user => {
+          users.sort((u1, u2) => u2.ranking - u1.ranking)
+            .map( user => {
             return (
               <li key={ user.id }>
                 { user.name } ({ user.ranking })
