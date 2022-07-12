@@ -4,23 +4,30 @@ import { connect } from 'react-redux';
 import { deleteThing, updateThing } from './store';
 
 const Things = ({ things, users, deleteThing, increment, updateThing })=> {
+
+  const usersWithNumThings = users.map(user => {
+    return {
+      ...user,
+      numThingsOwned: things.filter(thing => thing.userId === user.id).length,
+    };
+  });
+
   return (
     <div>
       <h1>Things</h1>
       <ul>
         {
           things.map( thing => {
-            const user = users.find(user => user.id === thing.userId) || {};
-
+            const user = usersWithNumThings.find(user => user.id === thing.userId) || {};
             return (
               <li key={ thing.id }>
                 { thing.name } ({ thing.ranking })
-                owned by { user.name || 'nobody' }
+                { user.name && ` owned by ${user.name} who has ${user.numThingsOwned} thing${ (user.numThingsOwned > 1) ? `s` : '' }` || `` }
                 <div>
                   <select defaultValue={ thing.userId } onChange={ ev => updateThing(thing, ev.target.value )}>
                     <option value=''>-- nobody --</option>
                     {
-                      users.map( user => {
+                      usersWithNumThings.map( user => {
                         return (
                           <option key={ user.id } value={ user.id }>{ user.name }</option>
                         );
