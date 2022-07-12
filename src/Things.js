@@ -18,16 +18,18 @@ const Things = ({ things, users, deleteThing, increment, updateThing })=> {
       <ul>
         {
           things.map( thing => {
-            const user = usersWithNumThings.find(user => user.id === thing.userId) || {};
+            const owner = usersWithNumThings.find(user => user.id === thing.userId) || {};
             return (
               <li key={ thing.id }>
                 { thing.name } ({ thing.ranking })
-                { user.name && ` owned by ${user.name} who has ${user.numThingsOwned} thing${ (user.numThingsOwned > 1) ? `s` : '' }` || `` }
+                { owner.name && ` owned by ${owner.name} who has ${owner.numThingsOwned} thing${ (owner.numThingsOwned > 1) ? `s` : '' }` || `` }
                 <div>
                   <select defaultValue={ thing.userId } onChange={ ev => updateThing(thing, ev.target.value )}>
                     <option value=''>-- nobody --</option>
                     {
-                      usersWithNumThings.map( user => {
+                      usersWithNumThings
+                        .filter(user => user.numThingsOwned < 3 || user.id === thing.userId)
+                        .map( user => {
                         return (
                           <option key={ user.id } value={ user.id }>{ user.name }</option>
                         );
