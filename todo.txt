@@ -3,5 +3,5 @@ x add a ranking to a User (defaults to 5)
 x display the ranking on the Users page
 x ability to increase and decrease users ranking on Users page
 x show the user with the highest ranking on the home page 
-- a user can have a max of 3 things
+x a user can have a max of 3 things
 
